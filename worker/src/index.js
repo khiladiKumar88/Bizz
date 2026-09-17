@@ -19,6 +19,13 @@ const MODE_PROMPTS = {
   reply: 'craft a reply to their last message shown in the screenshot',
 }
 
+const PLATFORM_CONTEXT = {
+  tinder: 'This is a Tinder profile/chat. Keep messages punchy — Tinder users expect short, direct openers.',
+  bumble: 'This is a Bumble profile/chat. On Bumble, women message first — if this is a reply, they already showed interest.',
+  hinge: 'This is a Hinge profile/chat. Hinge profiles have prompts and answers — reference them specifically when possible.',
+  instagram: 'This is an Instagram DM — keep the vibe casual and low-pressure, like a chill DM not a dating app pitch.',
+}
+
 export default {
   async fetch(request, env) {
     if (request.method === 'OPTIONS') {
@@ -66,7 +73,7 @@ export default {
       return json({ error: 'Invalid JSON body' }, 400)
     }
 
-    const { imageBase64, imageMediaType, tone, mode } = body
+    const { imageBase64, imageMediaType, tone, mode, platform } = body
 
     if (!imageBase64) return json({ error: 'Missing imageBase64' }, 400)
     if (!tone || !TONE_PROMPTS[tone]) return json({ error: 'Invalid tone' }, 400)
@@ -79,9 +86,11 @@ export default {
       return json({ error: 'API key not configured' }, 500)
     }
 
+    const platformNote = (platform && PLATFORM_CONTEXT[platform]) ? `\n${PLATFORM_CONTEXT[platform]}` : ''
+
     // --- Call Claude ---
     const systemPrompt = `You are a dating app messaging expert helping someone ${MODE_PROMPTS[mode]}.
-The tone should be ${TONE_PROMPTS[tone]}.
+The tone should be ${TONE_PROMPTS[tone]}.${platformNote}
 
 Rules:
 - Generate exactly 5 different, varied messages (not slight rephrasing of each other)

@@ -19,6 +19,7 @@ export default function UploadScreen({ onGenerate, loading, error, onClearError,
   const [image, setImage] = useState(null) // { base64, mediaType, previewUrl }
   const [tone, setTone] = useState(null)
   const [mode, setMode] = useState('opener')
+  const [platform, setPlatform] = useState(null)
   const [dragging, setDragging] = useState(false)
   const fileRef = useRef()
 
@@ -60,7 +61,7 @@ export default function UploadScreen({ onGenerate, loading, error, onClearError,
   const handleSubmit = () => {
     if (!image || !tone) return
     onClearError()
-    onGenerate({ imageBase64: image.base64, imageMediaType: image.mediaType, tone, mode })
+    onGenerate({ imageBase64: image.base64, imageMediaType: image.mediaType, tone, mode, platform })
   }
 
   const canGenerate = image && tone && !loading
@@ -132,7 +133,14 @@ export default function UploadScreen({ onGenerate, loading, error, onClearError,
             </label>
             <div className="flex gap-2">
               {PLATFORMS.map((p) => (
-                <button key={p.id} className="flex-1 text-center text-xs font-semibold py-2 rounded-xl bg-gray-100 text-gray-500 active:scale-95 transition-transform hover:bg-rose-50 hover:text-rose-500">
+                <button
+                  key={p.id}
+                  onClick={() => setPlatform(platform === p.id ? null : p.id)}
+                  className={`flex-1 text-center text-xs font-semibold py-2 rounded-xl transition-all active:scale-95
+                    ${platform === p.id
+                      ? 'bg-rose-50 text-rose-600 border-2 border-rose-400'
+                      : 'bg-gray-100 text-gray-500 border-2 border-transparent hover:bg-rose-50 hover:text-rose-500'}`}
+                >
                   <div className="text-base">{p.emoji}</div>
                   <div>{p.label}</div>
                 </button>

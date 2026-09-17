@@ -15,10 +15,10 @@ export default function App() {
   const [error, setError] = useState(null)
   const [lastRequest, setLastRequest] = useState(null)
 
-  async function handleGenerate({ imageBase64, imageMediaType, tone, mode }) {
+  async function handleGenerate({ imageBase64, imageMediaType, tone, mode, platform }) {
     setLoading(true)
     setError(null)
-    setLastRequest({ imageBase64, imageMediaType, tone, mode })
+    setLastRequest({ imageBase64, imageMediaType, tone, mode, platform })
     try {
       const res = await fetch(`${API_BASE}/generate`, {
         method: 'POST',
