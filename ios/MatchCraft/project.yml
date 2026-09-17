@@ -1,0 +1,60 @@
+name: MatchCraft
+options:
+  bundleIdPrefix: com.matchcraft
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "15"
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""          # Fill in your Apple Team ID before building
+    ENABLE_BITCODE: NO
+
+targets:
+
+  # ── Main container app ──────────────────────────────────────────────────────
+  MatchCraft:
+    type: application
+    platform: iOS
+    sources:
+      - path: MatchCraft
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matchcraft.app
+        INFOPLIST_FILE: MatchCraft/Info.plist
+        PRODUCT_NAME: MatchCraft
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    dependencies:
+      - target: MatchCraftKeyboard
+        embed: true
+
+  # ── Keyboard extension ───────────────────────────────────────────────────────
+  MatchCraftKeyboard:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: MatchCraftKeyboard
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matchcraft.app.keyboard
+        INFOPLIST_FILE: MatchCraftKeyboard/Info.plist
+        PRODUCT_NAME: MatchCraftKeyboard
+        # Keyboard extensions may not include extension-unsafe APIs
+        APPLICATION_EXTENSION_API_ONLY: YES
+
+schemes:
+  MatchCraft:
+    build:
+      targets:
+        MatchCraft: all
+        MatchCraftKeyboard: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    archive:
+      config: Release

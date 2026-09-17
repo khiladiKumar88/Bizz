@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Declares MatchCraft as an Input Method with a single subtype (English).
+  icon and settingsActivity are optional but recommended for Settings visibility.
+-->
+<input-method
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:supportsSwitchingToNextInputMethod="true">
+
+    <subtype
+        android:label="@string/subtype_en_us"
+        android:imeSubtypeMode="keyboard"
+        android:imeSubtypeLocale="en_US"
+        android:isAsciiCapable="true" />
+
+</input-method>

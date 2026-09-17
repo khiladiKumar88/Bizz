@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">MatchCraft</string>
+    <string name="ime_name">MatchCraft AI Keyboard</string>
+    <string name="subtype_en_us">English (US)</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Welcome to MatchCraft 💘</string>
+    <string name="onboarding_welcome_body">Your AI wingman for Tinder, Bumble, Hinge &amp; Instagram DMs.\n\nGet 5 clever, personalised replies in seconds — right from your keyboard.</string>
+    <string name="onboarding_enable_title">Enable the Keyboard ⌨️</string>
+    <string name="onboarding_enable_body">To use MatchCraft while typing in a dating app, add it in:\n\nSettings → System → Language &amp; Input → On-screen Keyboard → Manage keyboards\n\nToggle MatchCraft AI Keyboard on.</string>
+    <string name="onboarding_permission_title">Network Access 🔒</string>
+    <string name="onboarding_permission_body">MatchCraft needs internet access to reach the AI service.\n\n⚡ Privacy promise:\nWe NEVER log your keystrokes or read anything you type. The AI only processes an image you explicitly paste — nothing else, ever.</string>
+    <string name="onboarding_ready_title">You\'re All Set! ✅</string>
+    <string name="onboarding_ready_body">How to use it:\n\n1. Open Tinder, Bumble, Hinge or Instagram\n2. Tap any text field\n3. Switch to MatchCraft using the keyboard icon\n4. Tap ✨, paste a screenshot, pick a tone\n5. Tap a suggestion to insert it</string>
+
+    <!-- IME panel -->
+    <string name="paste_screenshot">Paste Screenshot from Clipboard</string>
+    <string name="screenshot_ready">✓ Screenshot ready</string>
+    <string name="generate_button">✨ Craft My Reply</string>
+    <string name="generating">Generating…</string>
+    <string name="no_image_error">Paste a screenshot first. Copy a profile image or chat screenshot to your clipboard, then tap Paste.</string>
+    <string name="no_full_access_error">Internet access is needed to reach the AI. Make sure the keyboard is enabled in Settings.</string>
+    <string name="tap_to_insert">Tap a suggestion to insert it:</string>
+    <string name="switch_keyboard">Switch Keyboard</string>
+    <string name="no_keystroke_logging">No keystrokes logged</string>
+</resources>

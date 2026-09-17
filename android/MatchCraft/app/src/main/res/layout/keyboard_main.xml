@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Root view for the IME input view.
+  Returned by MatchCraftIME.onCreateInputView().
+  Height is intentionally unconstrained — the system sizes it.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/keyboard_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/keyboard_bg"
+    android:maxHeight="420dp">
+
+    <!-- Scrollable content panel -->
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:overScrollMode="ifContentScrolls">
+
+        <LinearLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp"
+            android:clipToPadding="false">
+
+            <!-- Header -->
+            <TextView
+                android:id="@+id/header_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💘 MatchCraft AI"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@color/on_surface"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Mode toggle -->
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/mode_toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:singleSelection="true"
+                app:selectionRequired="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_opener"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:text="✨ Opener"
+                    android:textSize="13sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_reply"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:text="💬 Reply"
+                    android:textSize="13sp" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <!-- Tone chips (horizontal scroll) -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_marginBottom="12dp">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/tone_chip_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true" />
+
+            </HorizontalScrollView>
+
+            <!-- Paste button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/paste_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/paste_screenshot"
+                android:textSize="13sp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Image preview -->
+            <ImageView
+                android:id="@+id/image_preview"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Generate button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/generate_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/generate_button"
+                android:backgroundTint="@color/brand_rose"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Loading indicator -->
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Error message -->
+            <TextView
+                android:id="@+id/error_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/error"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Suggestions header -->
+            <TextView
+                android:id="@+id/suggestions_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tap_to_insert"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/on_surface_secondary"
+                android:visibility="gone"
+                android:layout_marginBottom="6dp" />
+
+            <!-- Suggestion cards container -->
+            <LinearLayout
+                android:id="@+id/suggestions_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom bar -->
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        android:background="@color/surface_variant"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/btn_switch_keyboard"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_keyboard"
+            android:contentDescription="@string/switch_keyboard"
+            android:tint="@color/on_surface_secondary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/no_keystroke_logging"
+            android:textSize="10sp"
+            android:textColor="@color/on_surface_secondary"
+            android:gravity="center" />
+
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_backspace"
+            android:contentDescription="Delete"
+            android:tint="@color/on_surface_secondary" />
+
+    </LinearLayout>
+
+</LinearLayout>
