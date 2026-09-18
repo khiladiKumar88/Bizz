@@ -153,7 +153,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="🔒 Only the screenshot you load is sent to the AI. No keystrokes are ever read or logged."
+                android:text="🔒 Only the image previewed above is sent, and only when you tap Craft My Reply. It is discarded when this panel closes. No keystrokes are ever read or logged."
                 android:textSize="11sp"
                 android:textColor="@color/on_surface_secondary"
                 android:alpha="0.7"

@@ -22,6 +22,17 @@ object APIClient {
 
     private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
 
+    /**
+     * WORKER_BASE_URL is hand-edited in build.gradle.kts, so a typo'd or pasted
+     * "http://" value would silently ship screenshots in plaintext. Fail loudly
+     * instead. Defence in depth behind network_security_config.xml.
+     */
+    private val baseUrl: String = BuildConfig.WORKER_BASE_URL.trimEnd('/').also {
+        require(it.startsWith("https://")) {
+            "WORKER_BASE_URL must use https:// — refusing to send screenshots over plaintext"
+        }
+    }
+
     sealed class Result {
         data class Success(val suggestions: List<String>) : Result()
         data class Error(val message: String) : Result()
@@ -44,7 +55,7 @@ object APIClient {
         }
 
         val request = Request.Builder()
-            .url("${BuildConfig.WORKER_BASE_URL}/generate")
+            .url("$baseUrl/generate")
             .post(body.toString().toRequestBody(JSON_MEDIA_TYPE))
             .build()
 

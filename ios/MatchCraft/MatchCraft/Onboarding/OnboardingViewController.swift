@@ -37,7 +37,7 @@ class OnboardingViewController: UIViewController {
         Step(
             emoji: "🔒",
             title: "Allow Full Access",
-            body: "MatchCraft needs Full Access to reach the AI over the internet.\n\n⚡ Privacy promise:\nWe NEVER log your keystrokes or read anything you type. Full Access is used only to send the screenshot you explicitly choose — nothing else, ever.\n\nEnable it in:\nSettings → General → Keyboard → Keyboards → MatchCraft → Allow Full Access",
+            body: "iOS gives keyboards no internet access at all unless you allow Full Access, so MatchCraft cannot reach the AI without it.\n\nWhat Full Access actually grants:\niOS will warn you that a keyboard with Full Access *can* transmit what you type. That warning is accurate and applies to every third-party keyboard — you should take it seriously.\n\nWhat MatchCraft does with it:\nOne thing only — sending the screenshot you explicitly paste, plus the tone you pick, to our server. The keyboard never reads the text field you're typing in: it only inserts and deletes text, never reads it.\n\nDon't just take our word for it:\nThe source is public. Search it for documentContextBeforeInput — the iOS call that reads typed text — and you'll find it appears nowhere.\n\nEnable it in:\nSettings → General → Keyboard → Keyboards → MatchCraft → Allow Full Access",
             buttonTitle: "Open Settings",
             buttonAction: .openFullAccessSettings
         ),

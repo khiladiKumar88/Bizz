@@ -192,5 +192,33 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Local data control -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/data_title"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/data_body"
+            android:textSize="13sp"
+            android:alpha="0.7"
+            android:layout_marginBottom="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_clear_data"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/clear_local_data"
+            android:textSize="14sp"
+            app:cornerRadius="24dp"
+            android:layout_marginBottom="24dp" />
+
     </LinearLayout>
 </ScrollView>

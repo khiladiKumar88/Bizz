@@ -34,7 +34,7 @@ class OnboardingActivity : AppCompatActivity() {
         ),
         Step(
             "🔒", "Network Access",
-            "MatchCraft needs internet access to reach the AI.\n\n⚡ Privacy promise:\n\nWe NEVER log your keystrokes or read anything you type. The AI only processes an image you explicitly paste — nothing else is transmitted, ever.",
+            "MatchCraft uses the internet for one thing: sending the screenshot you explicitly paste, plus the tone you pick, to our server.\n\nThe keyboard never reads the text field you're typing in. It only inserts and deletes text — it cannot read it.\n\nDon't just take our word for it: the source is public. Search it for getTextBeforeCursor, the Android call that reads typed text, and you'll find it appears nowhere.\n\nNothing you type is logged, cached, or stored — on your device or ours.",
             "Got It →", StepAction.NEXT_FROM_SETTINGS,
         ),
         Step(

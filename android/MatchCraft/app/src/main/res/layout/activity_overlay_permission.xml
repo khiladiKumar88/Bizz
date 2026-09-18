@@ -59,7 +59,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="The overlay does NOT read your screen. It only acts on a screenshot you explicitly select — nothing is automatic or logged."
+                android:text="The overlay cannot read your screen — Android gives it no such ability, and MatchCraft requests no screen-capture or accessibility permission.\n\nSo you don't have to hunt for it, opening the panel loads your most recent gallery image into a local preview. Nothing leaves your device until you tap Craft My Reply, and the image is discarded when you close the panel."
                 android:textSize="13sp"
                 android:alpha="0.8" />
 

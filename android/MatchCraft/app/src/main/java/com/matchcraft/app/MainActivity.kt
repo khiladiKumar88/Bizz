@@ -31,6 +31,23 @@ class MainActivity : AppCompatActivity() {
         renderStatus()
         renderSteps()
         wireOverlayControls()
+        wireDataControls()
+    }
+
+    private fun wireDataControls() {
+        findViewById<MaterialButton>(R.id.btn_clear_data).setOnClickListener {
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(R.string.clear_local_data)
+                .setMessage(R.string.clear_local_data_confirm)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    getSharedPreferences("matchcraft", MODE_PRIVATE).edit().clear().apply()
+                    android.widget.Toast.makeText(
+                        this, R.string.clear_local_data_done, android.widget.Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .show()
+        }
     }
 
     override fun onResume() {

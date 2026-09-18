@@ -3,15 +3,35 @@ main = "src/index.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
-# Bind a KV namespace for rate limiting (optional but recommended)
-# Create with: wrangler kv:namespace create RATE_LIMIT_KV
+# --- Rate limiting (REQUIRED) -------------------------------------------------
+# The worker fails CLOSED without this binding: every request returns 503 unless
+# ALLOW_UNLIMITED is set. That is deliberate — an unbound namespace used to mean
+# "no spend controls at all", which is the worst possible default for a paid API key.
+#
+# Create with: wrangler kv namespace create RATE_LIMIT_KV
 # Then uncomment and fill in the id:
 # [[kv_namespaces]]
 # binding = "RATE_LIMIT_KV"
 # id = "YOUR_KV_NAMESPACE_ID"
 
 [vars]
-# RATE_LIMIT_MAX_PER_DAY = "10"
+# Comma-separated exact origins allowed to call this worker from a browser.
+# No trailing slashes. Anything not listed gets no CORS header and is blocked by
+# the browser. Leave empty to block ALL cross-origin browser calls.
+# NOTE: CORS constrains browsers only — it is not authentication. See SECURITY.md.
+ALLOWED_ORIGINS = "https://matchcraft.pages.dev,http://localhost:5173"
+
+# Per-IP daily cap.
+RATE_LIMIT_MAX_PER_DAY = "10"
+
+# Hard ceiling across ALL callers per day. This is the cost circuit breaker that
+# still applies when one actor rotates IPs to defeat the per-IP limit. Set this to
+# a number you are willing to pay for in the worst case.
+GLOBAL_DAILY_MAX = "500"
+
+# Local development escape hatch ONLY. Set to "true" to run without a KV binding.
+# NEVER set this in production — it disables all spend controls.
+# ALLOW_UNLIMITED = "false"
 
 # Set secrets via CLI (never commit real keys):
 #   wrangler secret put CLAUDE_API_KEY

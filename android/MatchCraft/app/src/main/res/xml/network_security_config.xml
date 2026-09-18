@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
+    <!--
+      minSdk is 26, and on API 26-27 the platform default for
+      cleartextTrafficPermitted is TRUE. Without this base-config, Android 8.0/8.1
+      permitted plaintext HTTP to every domain not named below. Deny globally.
+    -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!--
+      Explicit entry for the default worker host. The base-config above already
+      covers custom domains, so changing WORKER_BASE_URL cannot silently
+      re-enable cleartext.
+    -->
     <domain-config cleartextTrafficPermitted="false">
-        <!-- Only allow HTTPS to our worker domain -->
         <domain includeSubdomains="true">workers.dev</domain>
     </domain-config>
 </network-security-config>

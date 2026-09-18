@@ -13,7 +13,7 @@ enum APIError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .invalidURL: return "Invalid API URL — check WORKER_BASE_URL in APIClient.swift"
+        case .invalidURL: return "Invalid API URL — WORKER_BASE_URL in APIClient.swift must be a valid https:// address"
         case .noData: return "No response received"
         case .serverError(let msg): return msg
         case .decodingError: return "Unexpected response format"
@@ -40,7 +40,11 @@ final class APIClient {
         platform: String? = nil,
         completion: @escaping (Result<[String], APIError>) -> Void
     ) {
-        guard let url = URL(string: "\(WORKER_BASE_URL)/generate") else {
+        // WORKER_BASE_URL is hand-edited above, so a typo'd or pasted "http://"
+        // value would silently ship screenshots in plaintext. Reject anything
+        // that is not HTTPS. Defence in depth behind App Transport Security.
+        guard let url = URL(string: "\(WORKER_BASE_URL)/generate"),
+              url.scheme?.lowercased() == "https" else {
             completion(.failure(.invalidURL))
             return
         }

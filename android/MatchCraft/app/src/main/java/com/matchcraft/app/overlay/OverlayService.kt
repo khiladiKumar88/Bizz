@@ -11,10 +11,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.PixelFormat
-import android.net.Uri
 import android.os.Build
 import android.os.IBinder
 import android.provider.MediaStore
@@ -248,6 +246,11 @@ class OverlayService : Service() {
 
         wirePanel(view)
 
+        // Tapjacking defence: refuse touches delivered while another window is
+        // drawn over this panel, so a malicious overlay can't trick the user into
+        // tapping Generate (which transmits their screenshot).
+        view.filterTouchesWhenObscured = true
+
         view.setOnTouchListener { _, ev ->
             if (ev.action == MotionEvent.ACTION_OUTSIDE) collapsePanel()
             false
@@ -264,6 +267,15 @@ class OverlayService : Service() {
 
     private fun removePanel() {
         panelView?.let { windowManager.removeViewImmediate(it); panelView = null }
+        // Drop the user's screenshot as soon as the panel closes. The bubble
+        // service can run for hours; retaining a decoded chat screenshot in
+        // process memory for that whole time is an unnecessary exposure.
+        clearSelectedImage()
+    }
+
+    private fun clearSelectedImage() {
+        selectedBitmap = null
+        selectedPlatform = null
     }
 
     private fun wirePanel(v: View) {
@@ -411,7 +423,10 @@ class OverlayService : Service() {
         } else bmp
         return ByteArrayOutputStream().use { out ->
             scaled.compress(Bitmap.CompressFormat.JPEG, 80, out)
-            Base64.encodeToString(out.toByteArray(), Base64.NO_WRAP)
+            val encoded = Base64.encodeToString(out.toByteArray(), Base64.NO_WRAP)
+            // Free the intermediate copy immediately rather than waiting on GC.
+            if (scaled !== bmp) scaled.recycle()
+            encoded
         }
     }
 
