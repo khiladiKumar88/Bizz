@@ -5,9 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "test": "node test/security.test.mjs"
   },
   "devDependencies": {
-    "wrangler": "^3.80.0"
+    "wrangler": "^4.135.0"
   }
 }
