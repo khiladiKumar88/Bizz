@@ -2,7 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_CLIPBOARD" />
+    <!--
+      No clipboard permission is declared. Reading the clipboard requires none:
+      access is gated at runtime by input-focus / active-IME status since
+      Android 10. A previously declared "android.permission.READ_CLIPBOARD" was
+      removed — no such permission exists in the Android SDK, so it granted
+      nothing and only looked like a speculative over-request.
+    -->
 
     <application
         android:allowBackup="true"

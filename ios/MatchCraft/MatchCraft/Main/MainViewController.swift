@@ -173,12 +173,18 @@ class MainViewController: UIViewController {
         title.font = .systemFont(ofSize: 15, weight: .bold)
 
         let body = UILabel()
-        body.text = "MatchCraft does NOT log keystrokes, read messages you type, or store screenshots.\n\nFull Access is used solely to send an image you explicitly paste to the AI service. Nothing else is ever transmitted."
+        body.text = "MatchCraft does NOT log keystrokes, read messages you type, or store screenshots.\n\nThe keyboard only inserts and deletes text — it never reads the field you're typing in. Full Access is used solely to send an image you explicitly paste to the AI service. Nothing else is ever transmitted.\n\nStored on this device: a single flag recording that you finished onboarding. No message history. Screenshots are held in memory only while a request is in flight, then discarded."
         body.font = .systemFont(ofSize: 13)
         body.textColor = .secondaryLabel
         body.numberOfLines = 0
 
-        let textStack = UIStackView(arrangedSubviews: [title, body])
+        let clearButton = UIButton(type: .system)
+        clearButton.setTitle("Clear Local App Data", for: .normal)
+        clearButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        clearButton.contentHorizontalAlignment = .leading
+        clearButton.addTarget(self, action: #selector(clearLocalData), for: .touchUpInside)
+
+        let textStack = UIStackView(arrangedSubviews: [title, body, clearButton])
         textStack.axis = .vertical
         textStack.spacing = 4
 
@@ -197,6 +203,24 @@ class MainViewController: UIViewController {
             row.bottomAnchor.constraint(equalTo: card.bottomAnchor),
         ])
         return card
+    }
+
+    @objc private func clearLocalData() {
+        let alert = UIAlertController(
+            title: "Clear Local App Data",
+            message: "This clears the onboarding flag — the only thing MatchCraft stores on this device. Continue?",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Clear", style: .destructive) { _ in
+            UserDefaults.standard.removeObject(forKey: "hasSeenOnboarding")
+            let done = UIAlertController(
+                title: nil, message: "Local app data cleared.", preferredStyle: .alert
+            )
+            done.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(done, animated: true)
+        })
+        present(alert, animated: true)
     }
 
     @objc private func openKeyboardSettings() {

@@ -6,6 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +26,23 @@ class MainActivity : AppCompatActivity() {
 
         renderStatus()
         renderSteps()
+        wireDataControls()
+    }
+
+    private fun wireDataControls() {
+        findViewById<MaterialButton>(R.id.btn_clear_data).setOnClickListener {
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(R.string.clear_local_data)
+                .setMessage(R.string.clear_local_data_confirm)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    getSharedPreferences("matchcraft", MODE_PRIVATE).edit().clear().apply()
+                    android.widget.Toast.makeText(
+                        this, R.string.clear_local_data_done, android.widget.Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .show()
+        }
     }
 
     override fun onResume() {

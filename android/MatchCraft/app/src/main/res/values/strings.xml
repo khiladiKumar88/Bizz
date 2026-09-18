@@ -23,4 +23,11 @@
     <string name="tap_to_insert">Tap a suggestion to insert it:</string>
     <string name="switch_keyboard">Switch Keyboard</string>
     <string name="no_keystroke_logging">No keystrokes logged</string>
+
+    <!-- Local data control -->
+    <string name="data_title">Your Data on This Device</string>
+    <string name="data_body">MatchCraft stores no message history on this device. The only thing saved locally is a single flag recording that you finished onboarding.\n\nScreenshots are never written to storage — they are held in memory only while a request is in flight, then discarded.</string>
+    <string name="clear_local_data">Clear Local App Data</string>
+    <string name="clear_local_data_confirm">This clears the onboarding flag — the only thing MatchCraft stores on this device. Continue?</string>
+    <string name="clear_local_data_done">Local app data cleared.</string>
 </resources>
