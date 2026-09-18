@@ -4,6 +4,23 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CLIPBOARD" />
 
+    <!-- Overlay (v3): draw over other apps -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Foreground service for the overlay bubble -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- API 34+: foreground service type must be declared -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+    <!-- Gallery access for latest screenshot (API 33+) -->
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        android:minSdkVersion="33" />
+    <!-- Gallery access (API 26–32) -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,7 +46,13 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- IME service — the custom keyboard -->
+        <!-- v3: overlay permission onboarding -->
+        <activity
+            android:name=".OverlayPermissionActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- IME service — the custom keyboard (v2) -->
         <service
             android:name=".keyboard.MatchCraftIME"
             android:exported="true"
@@ -44,6 +67,12 @@
                 android:name="android.view.im"
                 android:resource="@xml/method" />
         </service>
+
+        <!-- v3: floating overlay foreground service -->
+        <service
+            android:name=".overlay.OverlayService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
 
     </application>
 

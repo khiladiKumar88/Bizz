@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -74,6 +75,78 @@
             android:orientation="vertical"
             android:layout_marginBottom="24dp" />
 
+        <!-- v3: Floating Bubble section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/overlay_section_title"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/overlay_section_body"
+            android:textSize="14sp"
+            android:alpha="0.7"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Overlay status card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/overlay_status_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="14dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/overlay_status_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_marginEnd="10dp"
+                    android:text="🫧" />
+
+                <TextView
+                    android:id="@+id/overlay_status_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="13sp"
+                    android:text="@string/overlay_inactive" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_start_bubble"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="@string/start_bubble"
+            android:textSize="15sp"
+            android:backgroundTint="@color/brand_rose"
+            android:textColor="@android:color/white"
+            app:cornerRadius="26dp"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_stop_bubble"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="@string/stop_bubble"
+            android:textSize="15sp"
+            app:cornerRadius="26dp"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone" />
+
         <!-- Privacy card -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/privacy_card"
@@ -82,7 +155,6 @@
             app:cardBackgroundColor="#0A1D4ED8">
 
             <LinearLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -112,7 +184,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="MatchCraft does NOT log keystrokes, read messages you type, or store screenshots.\n\nFull network access is used solely to send an image you explicitly paste to the AI service. Nothing else is ever transmitted."
+                        android:text="MatchCraft does NOT log keystrokes, read messages you type, or store screenshots.\n\nFull network access is used solely to send an image you explicitly select to the AI service. Nothing else is ever transmitted."
                         android:textSize="13sp"
                         android:alpha="0.7" />
 

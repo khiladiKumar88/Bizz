@@ -1,12 +1,17 @@
 package com.matchcraft.app
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import com.matchcraft.app.overlay.OverlayService
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,12 +30,16 @@ class MainActivity : AppCompatActivity() {
 
         renderStatus()
         renderSteps()
+        wireOverlayControls()
     }
 
     override fun onResume() {
         super.onResume()
         renderStatus()
+        updateOverlayStatus()
     }
+
+    // ── Keyboard status ──────────────────────────────────────────────────────
 
     private fun renderStatus() {
         val enabled = isMatchCraftEnabled()
@@ -43,24 +52,21 @@ class MainActivity : AppCompatActivity() {
             icon.text = "✅"
             title.text = "Keyboard Active"
             subtitle.text = "MatchCraft AI Keyboard is enabled and ready"
-            card.setCardBackgroundColor(getColor(android.R.color.holo_green_light).let {
-                android.graphics.Color.argb(30, 0, 200, 100)
-            })
+            card.setCardBackgroundColor(android.graphics.Color.argb(30, 0, 200, 100))
         } else {
             icon.text = "⚠️"
             title.text = "Keyboard Not Enabled"
             subtitle.text = "Tap here to open keyboard settings"
             card.setCardBackgroundColor(android.graphics.Color.argb(30, 255, 152, 0))
             card.setOnClickListener {
-                startActivity(android.content.Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS))
+                startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS))
             }
         }
     }
 
     private fun isMatchCraftEnabled(): Boolean {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val enabledMethods = imm.enabledInputMethodList
-        return enabledMethods.any { it.packageName == packageName }
+        return imm.enabledInputMethodList.any { it.packageName == packageName }
     }
 
     private fun renderSteps() {
@@ -77,7 +83,6 @@ class MainActivity : AppCompatActivity() {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                 ).apply { bottomMargin = dp12 }
             }
-
             val emojiView = TextView(this).apply {
                 this.text = emoji
                 textSize = 20f
@@ -86,16 +91,69 @@ class MainActivity : AppCompatActivity() {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                 ).apply { marginEnd = dp8 }
             }
-
             val textView = TextView(this).apply {
                 this.text = text
                 textSize = 15f
                 layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             }
-
             row.addView(emojiView)
             row.addView(textView)
             container.addView(row)
         }
+    }
+
+    // ── Overlay (v3) controls ────────────────────────────────────────────────
+
+    private fun wireOverlayControls() {
+        val btnStart = findViewById<MaterialButton>(R.id.btn_start_bubble)
+        val btnStop = findViewById<MaterialButton>(R.id.btn_stop_bubble)
+
+        btnStart.setOnClickListener {
+            if (Settings.canDrawOverlays(this)) {
+                launchOverlayService()
+            } else {
+                startActivity(Intent(this, OverlayPermissionActivity::class.java))
+            }
+        }
+
+        btnStop.setOnClickListener {
+            stopService(OverlayService.stopIntent(this))
+            updateOverlayStatus()
+        }
+    }
+
+    private fun launchOverlayService() {
+        val intent = OverlayService.startIntent(this)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
+        // Move app to background so the bubble is visible immediately
+        moveTaskToBack(true)
+    }
+
+    private fun updateOverlayStatus() {
+        val running = isOverlayServiceRunning()
+        val statusText = findViewById<TextView>(R.id.overlay_status_text)
+        val btnStart = findViewById<MaterialButton>(R.id.btn_start_bubble)
+        val btnStop = findViewById<MaterialButton>(R.id.btn_stop_bubble)
+        val hasPermission = Settings.canDrawOverlays(this)
+
+        statusText.text = when {
+            running -> getString(R.string.overlay_active)
+            !hasPermission -> getString(R.string.overlay_permission_needed)
+            else -> getString(R.string.overlay_inactive)
+        }
+
+        btnStart.visibility = if (running) View.GONE else View.VISIBLE
+        btnStop.visibility = if (running) View.VISIBLE else View.GONE
+    }
+
+    private fun isOverlayServiceRunning(): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as android.app.ActivityManager
+        @Suppress("DEPRECATION")
+        return manager.getRunningServices(Int.MAX_VALUE)
+            .any { it.service.className == OverlayService::class.java.name }
     }
 }

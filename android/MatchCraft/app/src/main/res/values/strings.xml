@@ -23,4 +23,13 @@
     <string name="tap_to_insert">Tap a suggestion to insert it:</string>
     <string name="switch_keyboard">Switch Keyboard</string>
     <string name="no_keystroke_logging">No keystrokes logged</string>
+
+    <!-- Overlay (v3) -->
+    <string name="overlay_section_title">Floating Bubble (v3)</string>
+    <string name="overlay_section_body">Enable a persistent bubble that floats over any app. Tap it to get AI replies without leaving Tinder or Instagram.</string>
+    <string name="start_bubble">🫧 Start Floating Bubble</string>
+    <string name="stop_bubble">Stop Bubble</string>
+    <string name="overlay_active">Bubble is running</string>
+    <string name="overlay_inactive">Bubble is not running</string>
+    <string name="overlay_permission_needed">Requires "Display over other apps" permission</string>
 </resources>

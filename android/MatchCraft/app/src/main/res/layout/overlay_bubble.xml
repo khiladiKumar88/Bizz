@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:elevation="8dp">
+
+    <!-- Circular gradient background -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bubble_bg" />
+
+    <!-- App icon / logo label -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="💘"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:contentDescription="MatchCraft bubble" />
+
+</FrameLayout>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="12dp"
+    app:cardMaxElevation="16dp"
+    android:layout_margin="0dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Header row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="💘 MatchCraft"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_surface" />
+
+                <ImageView
+                    android:id="@+id/btn_close_panel"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    android:contentDescription="Close"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="4dp" />
+            </LinearLayout>
+
+            <!-- Screenshot section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Screenshot"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/on_surface_secondary"
+                android:layout_marginBottom="6dp" />
+
+            <ImageView
+                android:id="@+id/screenshot_preview"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:visibility="gone"
+                android:background="@drawable/panel_bg"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:id="@+id/screenshot_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loading latest screenshot…"
+                android:textSize="12sp"
+                android:textColor="@color/on_surface_secondary"
+                android:layout_marginBottom="4dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_pick_screenshot"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:text="↺ Reload Latest Screenshot"
+                android:textSize="12sp"
+                android:layout_marginBottom="14dp" />
+
+            <!-- Tone -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tone"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/on_surface_secondary"
+                android:layout_marginBottom="6dp" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tone_chip_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:singleSelection="true"
+                app:selectionRequired="true" />
+
+            <!-- Platform -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Platform (optional)"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/on_surface_secondary"
+                android:layout_marginBottom="6dp" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/platform_chip_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:singleSelection="true" />
+
+            <!-- Generate -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_generate"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="✨ Craft My Reply"
+                android:textSize="15sp"
+                android:backgroundTint="@color/brand_rose"
+                android:textColor="@android:color/white"
+                app:cornerRadius="24dp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- Status / error -->
+            <TextView
+                android:id="@+id/status_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/on_surface_secondary"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Suggestions -->
+            <LinearLayout
+                android:id="@+id/suggestions_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <!-- Privacy note -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🔒 Only the screenshot you load is sent to the AI. No keystrokes are ever read or logged."
+                android:textSize="11sp"
+                android:textColor="@color/on_surface_secondary"
+                android:alpha="0.7"
+                android:gravity="center"
+                android:layout_marginTop="12dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</com.google.android.material.card.MaterialCardView>
